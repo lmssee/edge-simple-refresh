@@ -1,0 +1,14 @@
+{
+  "name": {
+    "description": "默认的名称",
+    "message": "simple refresh"
+  },
+  "description": {
+    "description": "版本的描述",
+    "message": "a simple timed refresh "
+  },
+  "short_name": {
+    "description": "昵称",
+    "message": "re"
+  }
+}
