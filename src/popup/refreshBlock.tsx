@@ -28,9 +28,9 @@ export function Refresh(): React.JSX.Element {
   /** 改变当前状态 */
   function changeState() {
     const newStateNow = !StateNow;
+    sendMessage(newStateNow);
     setStateNow(newStateNow);
     manageData(newStateNow);
-    sendMessage(newStateNow);
   }
 
   /** 发送消息 */
@@ -38,7 +38,7 @@ export function Refresh(): React.JSX.Element {
     CTabs.sendMessage(id, {
       type: 'refresh',
       state: 'refresh',
-      delay: en ? (refreshInfo[id] && refreshInfo[id]) || 0 : 0,
+      delay: en ? refreshInfo[id] || 1.2 : 0,
       visibilityState: true,
     });
   }
@@ -53,7 +53,7 @@ export function Refresh(): React.JSX.Element {
           id,
           time: Date.now(),
           state: 'refresh',
-          delay: (refreshInfo[id] && refreshInfo[id]) || 0,
+          delay: refreshInfo[id] || 1.2,
         };
       /** 整理 */
       manageTabs(refreshPageList);
