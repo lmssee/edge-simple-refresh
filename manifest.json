@@ -20,6 +20,7 @@
     },
     "default_title": "__MSG_name__"
   },
+  "devtools_page": "dev/index.html",
   "author": "lmssee",
   "homepage_url": "https://lmssee.com/simple-refresh",
   "content_scripts": [

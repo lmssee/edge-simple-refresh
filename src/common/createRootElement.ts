@@ -8,12 +8,18 @@
  ****************************************************************************/
 /** 创建根元素并返回
  *
- * 创建后已经将元素追加到 body 下
+ * 创建后已经将元素追加到 `body` 下并成为该元素的第一子元素
  */
-export default function (): HTMLElement {
-  const div = document.createElement('div');
+export default function (
+  noteName: string = 'div',
+  append: boolean = false,
+): HTMLElement {
+  const div = document.createElement(noteName);
   div.id = 'lmssee';
-  div.innerHTML = 'hello lmssee';
-  document.body.appendChild(div);
+  if (append) {
+    document.body.appendChild(div);
+  } else {
+    document.body.prepend(div);
+  }
   return div;
 }

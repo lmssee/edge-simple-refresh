@@ -1,34 +1,34 @@
 {
   "name": {
     "description": "默认的名称",
-    "message": "simple refresh"
+    "message": "简易版刷新"
   },
   "description": {
     "description": "版本的描述",
-    "message": "a simple timed refresh "
+    "message": "简易版页面刷新"
   },
   "short_name": {
     "description": "昵称",
-    "message": "re"
+    "message": "重置"
   },
   "popup_h1": {
     "description": "弹窗标题",
-    "message": "timed refresh"
+    "message": "定时刷新"
   },
   "state": {
-    "description": "当前状态",
-    "message": "state"
+    "description": "状态",
+    "message": "状态"
   },
   "open": {
     "description": "当前状态为开启",
-    "message": "open"
+    "message": "开启"
   },
   "close": {
     "description": "当前状态为关闭",
-    "message": "close"
+    "message": "关闭"
   },
   "no_refresh_node": {
     "description": "未展示定时模块时的注解",
-    "message": "Note: The current page does not provide timed refreshing"
+    "message": "注：当前页面不提供刷新"
   }
 }

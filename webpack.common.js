@@ -1,13 +1,12 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 export default {
   entry: {
     background: './src/background/index.ts',
-    popup: './src/popup/app.tsx',
-    content: './src/content/index.ts',
+    popup: './src/popup/root.tsx',
+    content: './src/content/root.ts',
   },
   output: {
     path: path.join(import.meta.dirname, 'dist/js'),
@@ -39,13 +38,13 @@ export default {
       },
       // 配置 scss
       {
-        test: /\.scss$/,
-        // 加载是至下而上，也就是说 webpack 使用数组是 pop
+        test: /\.s?css$/i,
+        exclude: /node_modules/,
         use: [
           'style-loader',
           'css-loader',
-          'resolve-url-loader',
           'postcss-loader',
+          'resolve-url-loader',
           'sass-loader',
         ],
       },
@@ -74,15 +73,21 @@ export default {
         title: '定时刷新',
       },
     }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: '../dev/index.html',
+      chunks: [],
+      inject: 'body',
+      templateParameters: {
+        title: '定时刷新-开发块',
+      },
+    }),
     /// 文件复制
     new CopyPlugin({
       patterns: [
         { from: 'manifest.json', to: '../manifest.json' },
-        // { from: 'src/css', to: '../css' },
         { from: 'src/icons', to: '../icons' },
         { from: 'src/images', to: '../images' },
-        // { from: 'src/popup/index.css', to: '../popup/index.css' },
-        // { from: 'src/newtab/index.css', to: '../newtab/index.css' },
         { from: 'src/_locales', to: '../_locales' },
       ],
     }),
