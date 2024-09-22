@@ -11,7 +11,6 @@ import React, { useEffect } from 'react';
 import { CRuntime } from 'src/common';
 
 export function App() {
-
   /** 初始化监听数据变化 */
   useEffect(() => {
     CRuntime.messageAddListener((r: unknown) => {

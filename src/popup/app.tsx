@@ -7,6 +7,7 @@ import { CTabs } from 'src/common';
 import '../css/common.scss';
 import '../css/product.scss';
 import { TimeInfo } from './timeInfo';
+import { storeSyncList } from './store/storeData';
 
 /** 根元素 */
 export function App() {
@@ -19,7 +20,7 @@ export function App() {
     CTabs?.getCurrentPage(tabs => {
       const page = tabs[0];
       dispatch({
-        type: 'init_tab_info',
+        type: storeSyncList.init_tab_info,
         payload: { id: page.id, url: page.url },
       });
       const url = page!.url;

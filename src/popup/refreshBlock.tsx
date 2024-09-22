@@ -12,9 +12,9 @@ import { getLocaleText } from 'src/common/getLocaleText';
 import styles from './app.module.scss';
 import { CLStorage, CTabs } from 'src/common';
 import { useSelector } from 'react-redux';
-import { StoreState } from './store/store';
 import { RadioBlock } from './refreshRadio';
 import { refreshPageListT } from 'src/common/chromeLStorage';
+import { StoreState } from './store/storeData';
 
 /** 导出主模块  */
 export function Refresh(): React.JSX.Element {

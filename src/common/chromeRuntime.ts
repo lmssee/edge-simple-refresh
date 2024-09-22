@@ -20,7 +20,11 @@ export const CRuntime = {
    *
    */
   messageAddListener(
-    callback: (def: unknown, sender: CmRuntimeSender) => undefined,
+    callback: (
+      def: unknown,
+      sender: CmRuntimeSender,
+      sendResponse: unknown,
+    ) => undefined,
   ): undefined {
     chromeRuntime.onMessage.addListener(callback);
   },

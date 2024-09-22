@@ -9,10 +9,10 @@
 
 import React, { useLayoutEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { StoreState } from './store/store';
 import { useDispatch } from 'react-redux';
 import { setDelay } from './store/refreshSlice';
 import { refreshDelayT } from 'src/common/chromeLStorage';
+import { StoreState } from './store/storeData';
 
 /** 下部的单选框
  *

@@ -9,7 +9,7 @@
  * - 向页面添加一个悬浮钮
  ****************************************************************************/
 import { setStyle } from '../common/element';
-// import { message } from './message';
+import { message } from './message';
 
 /** 执行一个页面重新加载组建 */
 (() => {
@@ -39,7 +39,7 @@ import { setStyle } from '../common/element';
     setStyle(element, { visibility: 'hidden' });
     createACover();
     pageReload();
-    // message.reloadExtend();
+    message.reloadExtend();
   });
   element.addEventListener('contextmenu', () => pageReload());
   document.body.appendChild(element);

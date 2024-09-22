@@ -8,6 +8,7 @@
  ****************************************************************************/
 
 import { createSlice } from '@reduxjs/toolkit';
+import { storeSyncList } from './storeData';
 
 // export const fetchTabInfo = createAsyncThunk();
 
@@ -30,7 +31,7 @@ export const tabSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase('init_tab_info', (state, action: unknown) => {
+    builder.addCase(storeSyncList.init_tab_info, (state, action: unknown) => {
       const payload = (
         action as {
           payload: {

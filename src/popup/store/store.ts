@@ -11,7 +11,6 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import tabReducer from './tabSlice';
 import refreshReducer from './refreshSlice';
-import { refreshDelayT } from 'src/common/chromeLStorage';
 
 /**  创建储存到本的的配置信息 */
 const persistConfig = {
@@ -60,20 +59,5 @@ const store = configureStore({
  *
  */
 export const persistor = persistStore(store);
-
-export type StoreState = {
-  /** 当前标签页信息 */
-  tab: {
-    /** 标签的 id */
-    id: number;
-    /** 标签的 url */
-    url: string;
-  };
-  /*** 定时刷新相关 */
-  refresh: {
-    /** 定时延迟 */
-    info: { [x: number]: refreshDelayT };
-  };
-};
 
 export default store;

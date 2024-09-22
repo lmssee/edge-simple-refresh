@@ -12,8 +12,6 @@ import styles from './app.module.scss';
 import { getLocaleText } from 'src/common/getLocaleText';
 /*** 页面不允许展示定时刷新时展示的块 */
 export function TimeInfo() {
-  /// 设定定时器的值
-  const [timeoutId, setTimeoutId] = useState(setTimeout(() => 0));
   /// 展示的时间
   const [timeShow, setTimeShow] = useState({
     time: '',
@@ -31,15 +29,13 @@ export function TimeInfo() {
   if (timeShow.day === '') setTime();
 
   useLayoutEffect(() => {
-    setTimeoutId(
-      setTimeout(() => {
-        setTime();
-      }, 1000),
-    );
+    const timeId = setInterval(() => {
+      setTime();
+    }, 1000);
     return () => {
-      clearTimeout(timeoutId);
+      clearInterval(timeId);
     };
-  }, [timeShow]);
+  }, []);
 
   return (
     <div className={styles.timeShow}>

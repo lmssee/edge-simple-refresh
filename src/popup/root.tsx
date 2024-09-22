@@ -24,7 +24,12 @@ setStyle(root, {
   width: '100%',
   height: '100%',
   position: 'relative',
+  '--my-height': '100px',
 });
+setStyle(root, {
+  '--my-color': '#f0f',
+});
+
 const html = document.querySelector('html');
 html!.lang = chrome.i18n.getUILanguage().toLocaleLowerCase().startsWith('zh')
   ? 'zh_cn'

@@ -8,12 +8,16 @@
  ****************************************************************************/
 
 import { createSlice } from '@reduxjs/toolkit';
+import { storeSyncList } from './storeData';
+import { refreshDelayT } from 'src/common/chromeLStorage';
+
+/** 初始化值，这么写方便类型注释 */
+const initialState: { info: { [x: number]: refreshDelayT } } = { info: {} };
+
 /** 关于刷新的本地数据 */
 export const refreshSlice = createSlice({
   name: 'refresh',
-  initialState: {
-    info: {},
-  },
+  initialState,
   reducers: {
     /** 同步设置时间值 */
     setDelay: (state, actions) => {
@@ -21,12 +25,16 @@ export const refreshSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase('refresh_set_delay', (state, actions: unknown) => {
-      state.info = {
-        ...state.info,
-        ...(actions as { payload: {  id: number } }).payload,
-      };
-    });
+    builder.addCase(
+      storeSyncList.refresh_set_delay,
+      (state, actions: unknown) => {
+        const payload = (
+          actions as { payload: { id: number; delay: refreshDelayT } }
+        ).payload;
+
+        state.info[payload.id] = payload.delay;
+      },
+    );
   },
 });
 
