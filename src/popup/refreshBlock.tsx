@@ -28,7 +28,6 @@ export function Refresh(): React.JSX.Element {
   /** 改变当前状态 */
   function changeState() {
     const newStateNow = !StateNow;
-    sendMessage(newStateNow);
     setStateNow(newStateNow);
     manageData(newStateNow);
   }
@@ -38,6 +37,8 @@ export function Refresh(): React.JSX.Element {
     CTabs.sendMessage(id, {
       type: 'refresh',
       state: 'refresh',
+      from: 'popup',
+      to: 'contentJS',
       delay: en ? refreshInfo[id] || 1.2 : 0,
       visibilityState: true,
     });
@@ -56,11 +57,11 @@ export function Refresh(): React.JSX.Element {
           delay: refreshInfo[id] || 1.2,
         };
       /** 整理 */
-      manageTabs(refreshPageList);
+      manageTabs(en, refreshPageList);
     });
   }
   /** 根据现有的数据管理 */
-  function manageTabs(refreshPageList: refreshPageListT) {
+  function manageTabs(en: boolean, refreshPageList: refreshPageListT) {
     CTabs.get({}, tabs => {
       const ids: number[] = [];
       tabs.forEach(el => el.id && ids.push(el.id));
@@ -71,7 +72,10 @@ export function Refresh(): React.JSX.Element {
             delete refreshPageList[element.id];
         }
       }
-      CLStorage.set({ refreshPageList });
+      CLStorage.set({ refreshPageList }, () => {
+        /** 值储存到本地后再进行更改 */
+        sendMessage(en);
+      });
     });
   }
 
@@ -99,7 +103,6 @@ export function Refresh(): React.JSX.Element {
     /** 倘若当前不展示 */
     if (!StateNow || !refreshInfo || !refreshInfo[id]) return;
     manageData(StateNow);
-    sendMessage(StateNow);
   }, [refreshInfo]);
 
   return (

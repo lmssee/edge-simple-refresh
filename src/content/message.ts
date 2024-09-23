@@ -53,6 +53,13 @@ export const message = {
       to: 'backgroundJS',
     });
   },
+  /** 刷新状态 */
+  refreshState() {
+    this.send({
+      type: 'refreshState',
+      to: 'backgroundJS',
+    });
+  },
   /** 重新加载扩展 */
   reloadExtend() {
     this.send({

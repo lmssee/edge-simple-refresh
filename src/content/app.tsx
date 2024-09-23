@@ -16,9 +16,9 @@ import { getLocaleText } from 'src/common/getLocaleText';
 import { setStyle } from 'src/common/element';
 
 export function App() {
-  const [state, setState] = useState(9);
+  const [state, setState] = useState(-9);
   const [delay, setDelay] = useState(0);
-  /** 该按钮被电击触发  */
+  /** 该按钮被点击触发  */
   function clickIt(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const { target } = e,
       position =
@@ -40,10 +40,17 @@ export function App() {
   useEffect(() => {
     setState(-1);
     CRuntime.messageAddListener((r: unknown) => {
-      const request = r as { type: string; state: string; delay: number };
+      const request = r as {
+        type: string;
+        state: string;
+        delay: number;
+        from: 'backgroundJS' | 'popup';
+        to: 'contentJS' | '';
+      };
       switch (request.type) {
         /// 收到刷新页面相关的消息
         case 'refresh': {
+          if (request.from == 'popup') message.refreshState();
           setDelay(request.delay);
           if ((data.delay = request.delay) === 0) setState(-1);
           else if (request.state === 'suspend') {
@@ -55,6 +62,10 @@ export function App() {
           }
           break;
         }
+        case 'reloadPage': {
+          window.location.reload();
+          break;
+        }
       }
     });
 
@@ -63,10 +74,17 @@ export function App() {
     /// 放一个监听者，当页面被隐藏时触发
     document.addEventListener('visibilitychange', () => {
       const visibility = document.visibilityState;
-      if (visibility === 'hidden' && state === 1 && !data.positiveStop)
+      if (visibility === 'hidden' && state === 1 && !data.positiveStop) {
+        message.suspendRefresh();
         setState(0);
-      else if (visibility === 'hidden' && state === 0 && !data.positiveStop)
+      } else if (
+        visibility === 'visible' &&
+        state === 0 &&
+        !data.positiveStop
+      ) {
+        message.restoreRefresh();
         setState(1);
+      }
     });
     return () => {};
   }, []);
@@ -74,7 +92,6 @@ export function App() {
   useEffect(() => {
     const body = document.body;
     setStyle(body, {
-      '--custom-float-button-animation': state !== 1 ? 'running' : 'paused',
       '--refresh-animation-delay': `${delay}s`,
       '--custom-float-button-visibility': state > -1 ? 'block' : 'none',
     });
@@ -83,6 +100,7 @@ export function App() {
   return (
     <div
       className={styles.floatButton}
+      style={{ animationPlayState: state == 1 ? 'running' : 'paused' }}
       onContextMenu={e => e.preventDefault()}
       onClick={e => {
         clickIt(e);

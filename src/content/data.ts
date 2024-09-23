@@ -19,6 +19,7 @@
 export const data: {
   state: 'close' | 'cancel' | 'suspend' | 'stop';
   delay: number;
+  timeId: NodeJS.Timeout;
   showTime: number;
   remainder: number;
   positiveStop: boolean;
@@ -26,6 +27,8 @@ export const data: {
   state: 'close',
   /** 定时器的延迟时间 */
   delay: 1.2,
+  /** 定时器 id */
+  timeId: setTimeout(() => 1),
   /** 按钮展示的初始时间 */
   showTime: 0,
   /** 剩余的时间 */
