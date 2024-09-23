@@ -33,10 +33,10 @@ export function Refresh(): React.JSX.Element {
   }
 
   /** 发送消息 */
-  function sendMessage(en: boolean, state: string | undefined) {
+  function sendMessage(en: boolean) {
     CTabs.sendMessage(id, {
       type: 'refresh',
-      state: state || 'refresh',
+      state: 'refresh',
       from: 'popup',
       to: 'contentJS',
       delay: en ? refreshInfo[id] || 1.2 : 0,
@@ -75,7 +75,7 @@ export function Refresh(): React.JSX.Element {
       }
       CLStorage.set({ refreshPageList }, () => {
         /** 值储存到本地后再进行更改 */
-        sendMessage(en, refreshPageList[id] && refreshPageList[id].state);
+        sendMessage(en);
       });
     });
   }

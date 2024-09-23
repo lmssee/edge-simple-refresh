@@ -27,9 +27,14 @@ CRuntime.messageAddListener((_r, sender) => {
   if (type === 'reloadExtend') {
     chrome.runtime.reload();
     return;
+  } else if (type === 'pageHidden') {
+    if (sender.tab.active) {
+      return;
+    } else managementRefresh('suspendRefresh', sender.tab);
+    return;
   }
   /// 正在活动的页面发送来问询刷新页面的请求
-  if (
+  else if (
     (type === 'askRefresh' && sender.tab.active) ||
     type === 'cancelRefresh' ||
     type === 'suspendRefresh' ||
@@ -37,6 +42,6 @@ CRuntime.messageAddListener((_r, sender) => {
     type === 'refreshState'
   ) {
     managementRefresh(type, sender.tab);
-    return;
   }
+  return;
 });

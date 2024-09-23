@@ -46,8 +46,19 @@ export const message = {
       to: 'backgroundJS',
     });
   },
+  /** 页面被隐藏，为了区分主动隐藏和重加载 */
+  pageHidden() {
+    this.send({
+      type: 'pageHidden',
+      to: 'backgroundJS',
+    });
+  },
   /** 恢复已暂停的刷新 */
   restoreRefresh() {
+    this.send({
+      type: 'restoreRefresh',
+      to: 'backgroundJS',
+    });
     this.send({
       type: 'restoreRefresh',
       to: 'backgroundJS',

@@ -16,8 +16,25 @@ import { getLocaleText } from 'src/common/getLocaleText';
 import { setStyle } from 'src/common/element';
 
 export function App() {
-  const [state, setState] = useState(-9);
+  const [state, setState] = useState(-1);
   const [delay, setDelay] = useState(0);
+
+  /** 页面效果 */
+  const visibilitychange = () => {
+    const visibility = document.visibilityState;
+    console.log('====================================');
+    console.log(visibility, data);
+    console.log('====================================');
+    if (visibility === 'visible' && data.state === 0 && !data.positiveStop) {
+      data.state = 1;
+      message.restoreRefresh();
+      setState(1);
+    } else if (document.hidden && data.state === 1 && !data.positiveStop) {
+      setState(0);
+      data.state = 0;
+      message.pageHidden();
+    }
+  };
   /** 该按钮被点击触发  */
   function clickIt(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const { target } = e,
@@ -38,7 +55,6 @@ export function App() {
   }
   /** 初始化监听数据变化 */
   useEffect(() => {
-    setState(-1);
     CRuntime.messageAddListener((r: unknown) => {
       const request = r as {
         type: string;
@@ -72,24 +88,14 @@ export function App() {
     /** 问询当前页面是否要运行 */
     message.askRefresh();
     /// 放一个监听者，当页面被隐藏时触发
-    document.addEventListener('visibilitychange', () => {
-      const visibility = document.visibilityState;
-      if (visibility === 'hidden' && state === 1 && !data.positiveStop) {
-        message.suspendRefresh();
-        setState(0);
-      } else if (
-        visibility === 'visible' &&
-        state === 0 &&
-        !data.positiveStop
-      ) {
-        message.restoreRefresh();
-        setState(1);
-      }
-    });
-    return () => {};
+    document.addEventListener('visibilitychange', visibilitychange);
+    return () => {
+      document.removeEventListener('visibilitychange', visibilitychange);
+    };
   }, []);
 
   useEffect(() => {
+    data.state = state;
     const body = document.body;
     setStyle(body, {
       '--refresh-animation-delay': `${delay}s`,
