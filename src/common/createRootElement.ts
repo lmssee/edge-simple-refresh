@@ -10,11 +10,8 @@
  *
  * 创建后已经将元素追加到 `body` 下并成为该元素的第一子元素
  */
-export default function (
-  noteName: string = 'div',
-  append: boolean = false,
-): HTMLElement {
-  const div = document.createElement(noteName);
+export default function (append: boolean = false): HTMLElement {
+  const div = document.createElement('div');
   div.id = 'lmssee';
   if (append) {
     document.body.appendChild(div);

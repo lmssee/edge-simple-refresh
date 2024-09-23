@@ -27,6 +27,18 @@
     "description": "当前状态为关闭",
     "message": "close"
   },
+  "float_left": {
+    "description": "当前状态为关闭",
+    "message": "close"
+  },
+  "right_suspend": {
+    "description": "当前状态为关闭",
+    "message": "suspend"
+  },
+  "right_restore": {
+    "description": "当前状态为关闭",
+    "message": "restore"
+  },
   "no_refresh_node": {
     "description": "未展示定时模块时的注解",
     "message": "Note: The current page does not provide timed refreshing"

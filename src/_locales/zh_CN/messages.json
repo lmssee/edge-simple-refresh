@@ -27,6 +27,18 @@
     "description": "当前状态为关闭",
     "message": "关闭"
   },
+  "float_left": {
+    "description": "当前状态为关闭",
+    "message": "关闭"
+  },
+  "right_suspend": {
+    "description": "当前状态为关闭",
+    "message": "暂停"
+  },
+  "right_restore": {
+    "description": "当前状态为关闭",
+    "message": "恢复"
+  },
   "no_refresh_node": {
     "description": "未展示定时模块时的注解",
     "message": "注：当前页面不提供刷新"

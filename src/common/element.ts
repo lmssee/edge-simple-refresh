@@ -18,11 +18,11 @@ export function setStyle(
   if (oldStyle.length !== 0) {
     /** 由于直接使用 oldStyle 会将所有的属性带出，设置临时储存 */
     const templateStyle: { [x: string]: string } = {};
-    for (let i = oldStyle.length; i--; ) {
+    for (let i = 0, j = oldStyle.length; i < j; i++) {
       if (oldStyle[i].startsWith('--')) {
         templateStyle[oldStyle[i]] = window
           .getComputedStyle(node)
-          .getPropertyValue(oldStyle[i]);
+          .getPropertyValue(oldStyle[i]); /// 处理自定义属性
       } else {
         /**  @ts-expect-error: 油盐不进  */
         templateStyle[oldStyle[i]] = oldStyle[oldStyle[i]];

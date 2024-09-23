@@ -16,11 +16,16 @@
  * - positiveStop 主动停止，用于在主动停止后又切换页面导致的页面恢复后自动直接恢复状态
  */
 
-export const data = {
+export const data: {
+  state: 'close' | 'cancel' | 'suspend' | 'stop';
+  delay: number;
+  showTime: number;
+  remainder: number;
+  positiveStop: boolean;
+} = {
+  state: 'close',
   /** 定时器的延迟时间 */
   delay: 1.2,
-  /** 控制器，方便移除监听事件 */
-  AC: new AbortController(),
   /** 按钮展示的初始时间 */
   showTime: 0,
   /** 剩余的时间 */

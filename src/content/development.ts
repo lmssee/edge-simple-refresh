@@ -41,7 +41,10 @@ import { message } from './message';
     pageReload();
     message.reloadExtend();
   });
-  element.addEventListener('contextmenu', () => pageReload());
+  element.addEventListener('contextmenu', e => {
+    pageReload();
+    e.preventDefault();
+  });
   document.body.appendChild(element);
 
   /// 一个友好的遮盖层

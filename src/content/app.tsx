@@ -7,31 +7,113 @@
  * @Description 嵌入脚本的主页面逻辑
  ****************************************************************************/
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CRuntime } from 'src/common';
+import { message } from './message';
+import styles from './app.module.scss';
+import { data } from './data';
+import { getLocaleText } from 'src/common/getLocaleText';
+import { setStyle } from 'src/common/element';
 
 export function App() {
+  const [state, setState] = useState(9);
+  const [delay, setDelay] = useState(0);
+  /** 该按钮被电击触发  */
+  function clickIt(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const { target } = e,
+      position =
+        target &&
+        (target as HTMLElement).dataset &&
+        (target as HTMLElement).dataset['position'];
+    if (!position) return;
+    else if (position === 'left') {
+      message.cancelRefresh(); /// 发送消息
+      setState(-1); /// 设置新状态
+    } else if (position === 'right') {
+      const isSuspend = state == 1;
+      message[isSuspend ? 'suspendRefresh' : 'restoreRefresh'](); /// 发送消息
+      setState(isSuspend ? 0 : 1); /// 设置新状态
+      data.positiveStop = isSuspend;
+    }
+  }
   /** 初始化监听数据变化 */
   useEffect(() => {
+    setState(-1);
     CRuntime.messageAddListener((r: unknown) => {
       const request = r as { type: string; state: string; delay: number };
       switch (request.type) {
+        /// 收到刷新页面相关的消息
         case 'refresh': {
-          console.log('====================================');
-          console.log(request);
-          console.log('====================================');
-          // if( request.state ==  'suspend') {
-          // }
-          break;
-        }
-        default: {
+          setDelay(request.delay);
+          if ((data.delay = request.delay) === 0) setState(-1);
+          else if (request.state === 'suspend') {
+            setState(0);
+            data.positiveStop = true;
+          } else {
+            setState(1);
+            data.positiveStop = false;
+          }
           break;
         }
       }
     });
 
+    /** 问询当前页面是否要运行 */
+    message.askRefresh();
+    /// 放一个监听者，当页面被隐藏时触发
+    document.addEventListener('visibilitychange', () => {
+      const visibility = document.visibilityState;
+      if (visibility === 'hidden' && state === 1 && !data.positiveStop)
+        setState(0);
+      else if (visibility === 'hidden' && state === 0 && !data.positiveStop)
+        setState(1);
+    });
     return () => {};
   }, []);
 
-  return <>133</>;
+  useEffect(() => {
+    const body = document.body;
+    setStyle(body, {
+      '--custom-float-button-animation': state !== 1 ? 'running' : 'paused',
+      '--refresh-animation-delay': `${delay}s`,
+      '--custom-float-button-visibility': state > -1 ? 'block' : 'none',
+    });
+  }, [state, delay]);
+
+  return (
+    <div
+      className={styles.floatButton}
+      onContextMenu={e => e.preventDefault()}
+      onClick={e => {
+        clickIt(e);
+      }}
+    >
+      <SpanList state={state} />
+      {/* {state > -1 && <SpanList state={state} />} */}
+    </div>
+  );
+}
+
+function SpanList(props: { state: number }) {
+  const [StopText, setStopText] = useState('');
+  const [rightText, setRightText] = useState('');
+  const setRightTextFn = () =>
+    setRightText(
+      getLocaleText(props.state === 1 ? 'right_suspend' : 'right_restore'),
+    );
+
+  useEffect(() => {
+    setStopText(getLocaleText('float_left'));
+    setRightTextFn();
+  }, []);
+  useEffect(() => {
+    setRightTextFn();
+  }, [props.state]);
+
+  return (
+    <>
+      <span data-position="left">{StopText}</span>
+      <span data-position="right">{rightText}</span>
+    </>
+  );
 }

@@ -6,7 +6,7 @@ export default {
   entry: {
     background: './src/background/index.ts',
     popup: './src/popup/root.tsx',
-    content: './src/content/root.ts',
+    content: './src/content/root.tsx',
   },
   output: {
     path: path.join(import.meta.dirname, 'dist/js'),
