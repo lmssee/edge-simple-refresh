@@ -33,10 +33,10 @@ export function Refresh(): React.JSX.Element {
   }
 
   /** 发送消息 */
-  function sendMessage(en: boolean) {
+  function sendMessage(en: boolean, state: string | undefined) {
     CTabs.sendMessage(id, {
       type: 'refresh',
-      state: 'refresh',
+      state: state || 'refresh',
       from: 'popup',
       to: 'contentJS',
       delay: en ? refreshInfo[id] || 1.2 : 0,
@@ -48,12 +48,13 @@ export function Refresh(): React.JSX.Element {
   function manageData(en: boolean) {
     CLStorage.get(['refreshPageList'], result => {
       const refreshPageList = result.refreshPageList || {};
-      if (!en) delete refreshPageList[id];
+      if (!en) delete refreshPageList[id]; // 取消定时
       else
         refreshPageList[id] = {
           id,
           time: Date.now(),
-          state: 'refresh',
+          state:
+            (refreshPageList[id] && refreshPageList[id].state) || 'refresh', // 防止覆盖旧状态
           delay: refreshInfo[id] || 1.2,
         };
       /** 整理 */
@@ -74,7 +75,7 @@ export function Refresh(): React.JSX.Element {
       }
       CLStorage.set({ refreshPageList }, () => {
         /** 值储存到本地后再进行更改 */
-        sendMessage(en);
+        sendMessage(en, refreshPageList[id] && refreshPageList[id].state);
       });
     });
   }

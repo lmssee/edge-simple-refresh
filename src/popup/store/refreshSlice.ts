@@ -21,7 +21,8 @@ export const refreshSlice = createSlice({
   reducers: {
     /** 同步设置时间值 */
     setDelay: (state, actions) => {
-      state.info = { ...state.info, ...actions.payload };
+      const payload = actions.payload as { id: number; delay: refreshDelayT };
+      state.info[payload.id] = payload.delay;
     },
   },
   extraReducers(builder) {

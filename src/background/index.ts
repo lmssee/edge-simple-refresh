@@ -19,9 +19,6 @@ import { managementRefresh } from './refreshManage';
  * 在页面被隐藏时，即  `tab` 的 `active` 为 `false` 时，发送
  *  */
 CRuntime.messageAddListener((_r, sender) => {
-  console.log('====================================');
-  console.log(_r);
-  console.log('====================================');
   const response = _r as { [x: string]: number | string };
   /// 非礼勿视
   if (response['to'] !== 'backgroundJS') return;

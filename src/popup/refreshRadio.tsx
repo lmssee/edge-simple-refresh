@@ -7,7 +7,7 @@
  * @Description 按钮组
  ****************************************************************************/
 
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setDelay } from './store/refreshSlice';
@@ -21,6 +21,7 @@ import { StoreState } from './store/storeData';
 export function RadioBlock(): React.JSX.Element {
   const refreshInfo = useSelector((state: StoreState) => state.refresh.info);
   const id = useSelector((state: StoreState) => state.tab.id);
+  const [OldValue, setOldValue] = useState(0);
   // 获取按钮组
   const radio = useRef(null);
   const dataList: refreshDelayT[] = [1.2, 2.4, 3.6];
@@ -38,22 +39,21 @@ export function RadioBlock(): React.JSX.Element {
 
   /** 改变当前的值 */
   function changeState(delay: refreshDelayT) {
-    console.log('====================================');
-    console.log(delay);
-    console.log('====================================');
-    const data: { [x: number]: number } = {};
-    data[id] = delay;
-    /** 上报数据 */
-    dispatch(setDelay(data));
+    if (OldValue !== delay) dispatch(setDelay({ id, delay })); /// 上报数据
   }
 
   /** 初始化数据 */
   useLayoutEffect(() => {
     /** 没有值的时候重置值 */
     if (!refreshInfo || !refreshInfo[id]) {
-      dispatch(setDelay({ id: dataList[0] }));
+      const delay = dataList[0];
+      setOldValue(delay);
+      dispatch(setDelay({ id, delay }));
       setChecked(dataList[0]);
-    } else setChecked(refreshInfo[id]);
+    } else {
+      setOldValue(refreshInfo[id]);
+      setChecked(refreshInfo[id]);
+    }
     return () => {};
   }, []);
 

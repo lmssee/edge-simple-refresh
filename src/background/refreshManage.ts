@@ -73,6 +73,7 @@ export function managementRefresh(type: string, tab: CmTabsTab) {
               remainderTime: localValue.delay * 1000,
             };
           } else {
+            /// 延迟时间改变
             const _r = refreshList[id];
             clearTimeout(_r.timeId); /// 清理完成的定时器
             /** 下面的赋值是有序的 */
@@ -81,9 +82,12 @@ export function managementRefresh(type: string, tab: CmTabsTab) {
             );
             _r.startTime = Date.now();
             _r.delay = localValue.delay;
-            _r.timeId = setTimeout(() => {
-              message.reloadPage(id);
-            }, _r.remainderTime);
+            _r.timeId =
+              localValue.state === 'suspend'
+                ? setTimeout(() => 1)
+                : setTimeout(() => {
+                    message.reloadPage(id);
+                  }, _r.remainderTime);
           }
 
           break;
@@ -92,9 +96,6 @@ export function managementRefresh(type: string, tab: CmTabsTab) {
         default: {
           const _r = refreshList[id];
           if (type == 'suspendRefresh') {
-            console.log('====================================');
-            console.log(_r, _r.timeId);
-            console.log('====================================');
             clearTimeout(_r.timeId); /// 清理完成的定时器
             _r.remainderTime = Math.round(
               _r.remainderTime - (Date.now() - _r.startTime),
