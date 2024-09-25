@@ -37,10 +37,10 @@ export const CTabs = {
   sendMessage(
     id: number,
     msg: unknown,
-    callback?: undefined | ((result: unknown) => undefined),
+    callback?: (response: { [key: string]: unknown }) => void,
   ) {
     if (typeof callback === 'function')
-      chrome.tabs.sendMessage(id, msg, callback);
+      chrome.tabs.sendMessage(id, msg, {}, callback);
     else chrome.tabs.sendMessage(id, msg);
   },
 };

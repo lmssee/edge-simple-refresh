@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "dev": "webpack -w --config webpack.dev.js",
+    "build": "npm run rm && webpack --config webpack.prod.js",
+    "dev": "npm run rm && webpack -w --config webpack.dev.js",
     "r": "npm uninstall a-edge-extends-types && npm install ../../npm/edge-chrome",
+    "rm": "npx ixxx rm dist",
     "beautify": "npm run prettier",
     "prettier": "npx prettier . --write",
     "eslint": "npx eslint src"
@@ -22,11 +23,11 @@
     "url": "https://github.com/lmssee/edge-simple-refresh/issues"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
     "redux": "^5.0.1",
-    "@reduxjs/toolkit": "^2.2.7",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
@@ -39,7 +40,7 @@
     "@types/react-dom": "^18.3.0",
     "@types/react-redux": "^7.1.33",
     "@types/redux-persist": "^4.0.0",
-    "a-edge-extends-types": "^0.0.10",
+    "a-edge-extends-types": "^0.0.12",
     "autoprefixer": "^10.4.20",
     "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^12.0.2",

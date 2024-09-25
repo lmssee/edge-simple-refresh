@@ -32,7 +32,8 @@
         "https://*/*"
       ],
       "js": [
-        "./js/content.js"
+        "./js/content.js",
+        "./js/reload.js"
       ]
     }
   ],

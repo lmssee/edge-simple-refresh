@@ -20,9 +20,13 @@ import { StoreState } from './store/storeData';
 export function Refresh(): React.JSX.Element {
   /** 标签页的 id ，用于发送消息给指定的标签页 */
   const id = useSelector((state: StoreState) => state.tab.id);
+  /** 刷新的数据 */
   const refreshInfo = useSelector((state: StoreState) => state.refresh.info);
+  /** 文本：“状态” */
   const [stateText, setStateText] = useState('');
+  /** 文本：“关闭/开启” */
   const [stateValueText, setStateValueText] = useState('正查询');
+  /** 当前状态 */
   const [StateNow, setStateNow] = useState(false);
 
   /** 改变当前状态 */
@@ -32,19 +36,34 @@ export function Refresh(): React.JSX.Element {
     manageData(newStateNow);
   }
 
-  /** 发送消息 */
+  /** 发送消息
+   *
+   * 向页面发送当前动作
+   */
   function sendMessage(en: boolean) {
-    CTabs.sendMessage(id, {
-      type: 'refresh',
-      state: 'refresh',
-      from: 'popup',
-      to: 'contentJS',
-      delay: en ? refreshInfo[id] || 1.2 : 0,
-      visibilityState: true,
-    });
+    CTabs.sendMessage(
+      id,
+      {
+        type: 'refresh',
+        state: 'refresh',
+        from: 'popup',
+        to: 'contentJS',
+        delay: en ? refreshInfo[id] || 1.2 : 0,
+        visibilityState: true,
+      },
+      result => {
+        /** 正常嵌入脚本会调用该逻辑，会返回一个对象，而非 undefined */
+        if (result == undefined) {
+          chrome.tabs.reload(id);
+        }
+      },
+    );
   }
 
-  /** 管理数据 */
+  /** 管理数据
+   *
+   * 根据动作管理该页面的数据
+   */
   function manageData(en: boolean) {
     CLStorage.get(['refreshPageList'], result => {
       const refreshPageList = result.refreshPageList || {};
@@ -61,7 +80,12 @@ export function Refresh(): React.JSX.Element {
       manageTabs(en, refreshPageList);
     });
   }
-  /** 根据现有的数据管理 */
+  /** 根据现有的数据管理
+   *
+   * 依据现有标签页的数据对就数据进行处理
+   *
+   * 清理旧的标签遗留数据
+   */
   function manageTabs(en: boolean, refreshPageList: refreshPageListT) {
     CTabs.get({}, tabs => {
       const ids: number[] = [];

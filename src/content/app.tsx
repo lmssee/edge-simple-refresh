@@ -7,7 +7,7 @@
  * @Description 嵌入脚本的主页面逻辑
  ****************************************************************************/
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CRuntime } from 'src/common';
 import { message } from './message';
 import styles from './app.module.scss';
@@ -18,13 +18,11 @@ import { setStyle } from 'src/common/element';
 export function App() {
   const [state, setState] = useState(-1);
   const [delay, setDelay] = useState(0);
+  const div = useRef(null);
 
   /** 页面效果 */
   const visibilitychange = () => {
     const visibility = document.visibilityState;
-    console.log('====================================');
-    console.log(visibility, data);
-    console.log('====================================');
     if (visibility === 'visible' && data.state === 0 && !data.positiveStop) {
       data.state = 1;
       message.restoreRefresh();
@@ -55,7 +53,7 @@ export function App() {
   }
   /** 初始化监听数据变化 */
   useEffect(() => {
-    CRuntime.messageAddListener((r: unknown) => {
+    CRuntime.messageAddListener((r: unknown, sender, sendResponse) => {
       const request = r as {
         type: string;
         state: string;
@@ -66,22 +64,32 @@ export function App() {
       switch (request.type) {
         /// 收到刷新页面相关的消息
         case 'refresh': {
-          if (request.from == 'popup') message.refreshState();
+          /** 来自于弹窗的消息，通知后台刷新状态 */
+          if (request.from == 'popup') {
+            if (typeof sendResponse === 'function') {
+              sendResponse({
+                message: true,
+                id: sender.id,
+              });
+            }
+            message.refreshState();
+          }
           setDelay(request.delay);
           if ((data.delay = request.delay) === 0) setState(-1);
           else if (request.state === 'suspend') {
             setState(0);
-            data.positiveStop = true;
+            if (document.visibilityState == 'visible') data.positiveStop = true;
           } else {
             setState(1);
             data.positiveStop = false;
           }
           break;
         }
-        case 'reloadPage': {
-          window.location.reload();
-          break;
-        }
+
+        // case 'reloadPage': {
+        //   window.location.reload();
+        //   break;
+        // }
       }
     });
 
@@ -90,21 +98,26 @@ export function App() {
     /// 放一个监听者，当页面被隐藏时触发
     document.addEventListener('visibilitychange', visibilitychange);
     return () => {
+      ///  当组件消失后清理监听器
       document.removeEventListener('visibilitychange', visibilitychange);
     };
   }, []);
 
+  /** 更改状态 */
   useEffect(() => {
     data.state = state;
-    const body = document.body;
-    setStyle(body, {
-      '--refresh-animation-delay': `${delay}s`,
-      '--custom-float-button-visibility': state > -1 ? 'block' : 'none',
-    });
+    if (div.current) {
+      const parent = (div.current as HTMLElement).parentElement!;
+      setStyle(parent, {
+        display: state > -1 ? 'block' : 'none',
+        '--refresh-animation-delay': `${delay}s`,
+      });
+    }
   }, [state, delay]);
 
   return (
     <div
+      ref={div}
       className={styles.floatButton}
       style={{ animationPlayState: state == 1 ? 'running' : 'paused' }}
       onContextMenu={e => e.preventDefault()}
@@ -118,18 +131,23 @@ export function App() {
   );
 }
 
+/** 左右文本展示 */
 function SpanList(props: { state: number }) {
+  /** 左侧文本展示 */
   const [StopText, setStopText] = useState('');
+  /** 右侧文本展示 */
   const [rightText, setRightText] = useState('');
+  /** 国际化右侧文本  */
   const setRightTextFn = () =>
     setRightText(
       getLocaleText(props.state === 1 ? 'right_suspend' : 'right_restore'),
     );
-
+  /** 初始化时初始化文本信息 */
   useEffect(() => {
     setStopText(getLocaleText('float_left'));
     setRightTextFn();
   }, []);
+  /** 当触发事件后更新右侧文本 */
   useEffect(() => {
     setRightTextFn();
   }, [props.state]);

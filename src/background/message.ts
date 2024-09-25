@@ -39,10 +39,4 @@ const message = {
       to: 'contentJS',
     });
   },
-  reloadPage(id: number) {
-    this.send(id, {
-      type: 'reloadPage',
-      to: 'contentJS',
-    });
-  },
 };

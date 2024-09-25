@@ -12,7 +12,7 @@ import { storeSyncList } from './store/storeData';
 /** 根元素 */
 export function App() {
   const dispatch = useDispatch();
-  const [ShowOther, setShowOther] = useState(true);
+  const [ShowOther, setShowOther] = useState(true); /// 用于判定页面是否支持刷新
 
   /** 设定 h1 文本 */
   const [h1Text, setH1Text] = useState('');

@@ -14,15 +14,7 @@ export { CRuntime } from './chromeRuntime';
 /** 监听 storage 数据变化 */
 
 export function CLChanged(
-  callback: (
-    pref: {
-      [key: string]: {
-        oldValue: unknown;
-        newValue: unknown;
-      };
-    },
-    areaName: 'local' | 'sync',
-  ) => undefined,
+  callback: (changes: object, areaName: string) => undefined,
 ) {
   chrome.storage.onChanged.addListener(callback);
 }

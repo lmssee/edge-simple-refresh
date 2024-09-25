@@ -20,7 +20,6 @@
  ****************************************************************************/
 
 /** 开发打开一键重启扩展按钮 */
-import './development';
 import createRootElement from 'src/common/createRootElement';
 import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';

@@ -11,6 +11,7 @@
 import { CRuntime } from 'src/common/chromeRuntime';
 import './getState';
 import { managementRefresh } from './refreshManage';
+import { CTabs } from 'src/common';
 
 /// 获取当前刷新状态
 /**
@@ -23,25 +24,25 @@ CRuntime.messageAddListener((_r, sender) => {
   /// 非礼勿视
   if (response['to'] !== 'backgroundJS') return;
   const { type } = response;
-  /// 请求重新加载插件
   if (type === 'reloadExtend') {
-    chrome.runtime.reload();
+    chrome.runtime.reload(); /// 请求重新加载插件
     return;
   } else if (type === 'pageHidden') {
-    if (sender.tab.active) {
-      return;
-    } else managementRefresh('suspendRefresh', sender.tab);
+    CTabs.getCurrentPage(tabs => {
+      if (tabs[0] !== sender.tab && sender.tab && sender.tab.active == !1)
+        managementRefresh('suspendRefresh', sender.tab); // 如果抓取的当前页面为发送消息页面则执行
+    });
     return;
   }
   /// 正在活动的页面发送来问询刷新页面的请求
   else if (
-    (type === 'askRefresh' && sender.tab.active) ||
+    type === 'askRefresh' ||
     type === 'cancelRefresh' ||
     type === 'suspendRefresh' ||
     type === 'restoreRefresh' ||
     type === 'refreshState'
   ) {
-    managementRefresh(type, sender.tab);
+    if (sender.tab) managementRefresh(type, sender.tab);
   }
   return;
 });
