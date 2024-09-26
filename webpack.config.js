@@ -4,7 +4,6 @@ import path from 'node:path';
 
 export default function ({ dev }) {
   /** 当前是否为开发环境 */
-  // const dev = env.dev || false;
   /** 入口 */
   const entry = {
     background: {

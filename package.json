@@ -1,25 +1,24 @@
 {
-  "name": "edge-simple-refresh",
+  "license": "ISC",
   "type": "module",
   "version": "0.0.1",
+  "name": "edge-simple-refresh",
+  "homepage": "https://lmssee.com/simple-refresh",
+  "description": "a simple refresh of edge web page",
+  "author": "lmssee <lmssee@outlook.com> (https://lmssee.com)",
   "scripts": {
     "build": "npm run rm && webpack ",
     "dev": "npm run rm && webpack -w --env dev",
     "start": "npm run rm && webpack serve --env dev",
-    "r": "npm uninstall a-edge-extends-types && npm install ../../npm/edge-chrome",
     "rm": "npx ixxx rm dist",
     "beautify": "npm run prettier",
     "prettier": "npx prettier . --write",
     "eslint": "npx eslint src"
   },
-  "author": "lmssee <lmssee@outlook.com> (https://lmssee.com)",
-  "license": "ISC",
-  "description": "a simple refresh of edge web page",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lmssee/edge-simple-refresh.git"
   },
-  "homepage": "https://lmssee.com/simple-refresh",
   "bugs": {
     "url": "https://github.com/lmssee/edge-simple-refresh/issues"
   },

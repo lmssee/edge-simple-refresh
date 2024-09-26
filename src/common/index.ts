@@ -9,7 +9,6 @@
 
 export { CLStorage } from './chromeLStorage';
 export { CTabs } from './chromeTabs';
-export { CSStorage } from './chromeSStorage';
 export { CRuntime } from './chromeRuntime';
 /** 监听 storage 数据变化 */
 
