@@ -11,6 +11,8 @@ import React from 'react';
 
 import styles from './app.module.scss';
 
+import { svgImage } from '../images/export_svg';
+
 /**
  * 页脚的超链展示
  */
@@ -18,22 +20,22 @@ export function Footer(): React.JSX.Element {
   const dataList: { href: string; src: string; title: string }[] = [
     {
       title: '🌟🌟',
-      src: '../images/GitHub.png',
+      src: svgImage.github,
       href: 'https://github.com/lmssee/edge-simple-refresh',
     },
     {
       title: '邮件反馈',
-      src: '../images/email.png',
+      src: svgImage.email,
       href: 'mailto:lmssee@outlook.com',
     },
     {
       title: 'letmiseesee',
-      src: '../images/x.png',
+      src: svgImage.x,
       href: 'https://x.com/letmiseesee',
     },
     {
       title: '建议反馈',
-      src: '../images/feedback.png',
+      src: svgImage.feedback,
       href: 'https://github.com/lmssee/edge-reset-new-tab/issues/new',
     },
   ];

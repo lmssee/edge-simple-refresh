@@ -32,12 +32,12 @@
         "https://*/*"
       ],
       "js": [
-        "./js/content.js"
+        "./content/index.js"
       ]
     }
   ],
   "background": {
-    "service_worker": "./js/background.js"
+    "service_worker": "./background/index.js"
   },
   "default_locale": "en",
   "update_url": "https://edge.microsoft.com/extensionwebstorebase/v1/crx",

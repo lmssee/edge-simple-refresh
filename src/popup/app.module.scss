@@ -34,11 +34,15 @@
           overflow: hidden;
           vertical-align: middle;
           height: var(--popup-foot-li-height);
+          background-color: #0f0;
           transform: translate(0, -1px);
           border-radius: 50%;
           cursor: pointer;
+          transition: all 1s;
 
           &:hover {
+            transition: all 0.6s;
+            background-color: #f06;
             transform: scale(1.68) translate(0, -15%);
           }
         }
