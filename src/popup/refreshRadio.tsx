@@ -39,7 +39,10 @@ export function RadioBlock(): React.JSX.Element {
 
   /** 改变当前的值 */
   function changeState(delay: refreshDelayT) {
-    if (OldValue !== delay) dispatch(setDelay({ id, delay })); /// 上报数据
+    if (OldValue !== delay) {
+      setOldValue(delay);
+      dispatch(setDelay({ id, delay })); /// 上报数据
+    }
   }
 
   /** 初始化数据 */

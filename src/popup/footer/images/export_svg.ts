@@ -7,10 +7,10 @@
  * @Description 导出 svg 图标资源
  ****************************************************************************/
 
-import github from 'src/images/github.svg';
-import x from 'src/images/x.svg';
-import feedback from 'src/images/feedback.svg';
-import email from 'src/images/email.svg';
+import github from './github.svg';
+import x from './x.svg';
+import feedback from './feedback.svg';
+import email from './email.svg';
 
 export const svgImage = {
   github,

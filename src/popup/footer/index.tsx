@@ -9,9 +9,9 @@
 
 import React from 'react';
 
-import styles from './app.module.scss';
+import styles from './index.module.scss';
 
-import { svgImage } from '../images/export_svg';
+import { svgImage } from './images/export_svg';
 
 /**
  * 页脚的超链展示
@@ -21,7 +21,7 @@ export function Footer(): React.JSX.Element {
     {
       title: '🌟🌟',
       src: svgImage.github,
-      href: 'https://github.com/lmssee/edge-simple-refresh',
+      href: 'https://github.com/lmssee/edge-reset-new-tab',
     },
     {
       title: '邮件反馈',
