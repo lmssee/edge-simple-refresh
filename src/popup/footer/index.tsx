@@ -12,6 +12,7 @@ import React from 'react';
 import styles from './index.module.scss';
 
 import { svgImage } from './images/export_svg';
+import { getLocaleText } from 'src/common/getLocaleText';
 
 /**
  * 页脚的超链展示
@@ -24,7 +25,7 @@ export function Footer(): React.JSX.Element {
       href: 'https://github.com/lmssee/edge-reset-new-tab',
     },
     {
-      title: '邮件反馈',
+      title: getLocaleText('email_feedback'),
       src: svgImage.email,
       href: 'mailto:lmssee@outlook.com',
     },
@@ -34,7 +35,7 @@ export function Footer(): React.JSX.Element {
       href: 'https://x.com/letmiseesee',
     },
     {
-      title: '建议反馈',
+      title: getLocaleText('bug_feedback'),
       src: svgImage.feedback,
       href: 'https://github.com/lmssee/edge-reset-new-tab/issues/new',
     },

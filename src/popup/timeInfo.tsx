@@ -22,7 +22,17 @@ export function TimeInfo() {
     const now = new Date();
     setTimeShow({
       time: now.toLocaleString(),
-      day: `周${['天', '一', '二', '三', '四', '五', '六'][now.getDay()]}`,
+      day: getLocaleText(
+        [
+          'sunday',
+          'monday',
+          'tuesday',
+          'wednesday',
+          'thursday',
+          'friday',
+          'saturday',
+        ][now.getDay()],
+      ),
     });
   }
   /// 初始化仅当未给值的时候进行第一次调用，后续直接在副总用器中产生值

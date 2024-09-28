@@ -11,9 +11,45 @@
     "description": "昵称",
     "message": "重置"
   },
+  "monday": {
+    "description": "周一",
+    "message": "周一"
+  },
+  "tuesday": {
+    "description": "周二",
+    "message": "周二"
+  },
+  "wednesday": {
+    "description": "周三",
+    "message": "周三"
+  },
+  "thursday": {
+    "description": "周四",
+    "message": "周四"
+  },
+  "friday": {
+    "description": "周五",
+    "message": "周五"
+  },
+  "saturday": {
+    "description": "周六",
+    "message": "周六"
+  },
+  "sunday": {
+    "description": "周日",
+    "message": "周日"
+  },
   "popup_h1": {
     "description": "弹窗标题",
     "message": "定时刷新"
+  },
+  "email_feedback": {
+    "description": "邮件反馈",
+    "message": "邮件反馈"
+  },
+  "bug_feedback": {
+    "description": "反馈建议",
+    "message": "bug 反馈"
   },
   "state": {
     "description": "状态",
