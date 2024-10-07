@@ -1,7 +1,7 @@
 {
   "license": "ISC",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "name": "edge-simple-refresh",
   "homepage": "https://lmssee.com/simple-refresh",
   "description": "a simple refresh of edge web page",

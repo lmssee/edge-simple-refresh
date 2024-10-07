@@ -32,32 +32,8 @@ export function Refresh(): React.JSX.Element {
   /** 改变当前状态 */
   function changeState() {
     const newStateNow = !StateNow;
-    setStateNow(newStateNow);
-    manageData(newStateNow);
-  }
-
-  /** 发送消息
-   *
-   * 向页面发送当前动作
-   */
-  function sendMessage(en: boolean) {
-    CTabs.sendMessage(
-      id,
-      {
-        type: 'refresh',
-        state: 'refresh',
-        from: 'popup',
-        to: 'contentJS',
-        delay: en ? refreshInfo[id] || 1.2 : 0,
-        visibilityState: true,
-      },
-      result => {
-        /** 正常嵌入脚本会调用该逻辑，会返回一个对象，而非 undefined */
-        if (result == undefined) {
-          chrome.tabs.reload(id);
-        }
-      },
-    );
+    setStateNow(newStateNow); /// 更改页面的状态
+    manageData(newStateNow); /// 更改储存数据状态
   }
 
   /** 管理数据
@@ -103,7 +79,20 @@ export function Refresh(): React.JSX.Element {
       });
     });
   }
-
+  /** 发送消息
+   *
+   * 向页面发送当前动作
+   */
+  function sendMessage(en: boolean) {
+    CTabs.sendMessage(id, {
+      type: 'refresh',
+      state: 'refresh',
+      from: 'popup',
+      to: 'contentJS',
+      delay: en ? refreshInfo[id] || 1.2 : 0,
+      visibilityState: true,
+    });
+  }
   /** 仅初始化时需要设定 */
   useEffect(() => {
     setStateText(getLocaleText('state')); /// 设置状态文本

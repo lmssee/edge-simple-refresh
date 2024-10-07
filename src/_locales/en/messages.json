@@ -1,15 +1,15 @@
 {
   "name": {
     "description": "默认的名称",
-    "message": "simple refresh"
+    "message": "simple page refresh"
   },
   "description": {
     "description": "版本的描述",
-    "message": "a simple timed refresh"
+    "message": "Simple page refresh tool. Refresh your pages regularly when you need to, and free simple page debugging from the hassle of <meta http-equiv=\"refresh\" content=\"5\"> and manual refreshes"
   },
   "short_name": {
     "description": "昵称",
-    "message": "re"
+    "message": "S-refresh"
   },
   "monday": {
     "description": "周一",

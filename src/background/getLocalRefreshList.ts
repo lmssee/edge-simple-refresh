@@ -9,6 +9,11 @@
 
 import { CLStorage, CmStorageLocalValueT } from 'src/common/chromeLStorage';
 
+/**
+ *
+ * 抓取本地的数据
+ *
+ * */
 export function getLocalRefreshList(
   callBack: (result: CmStorageLocalValueT) => undefined,
 ) {

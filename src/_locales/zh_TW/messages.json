@@ -1,82 +1,82 @@
 {
   "name": {
     "description": "默认的名称",
-    "message": "简易版刷新"
+    "message": "簡易版重繪"
   },
   "description": {
     "description": "版本的描述",
-    "message": "简易版页面刷新"
+    "message": "簡單的頁面刷新工具。在需要的時候定時刷新你的頁面，讓簡單的頁面調試擺脫 <meta HTTP-equiv=\"refresh\" content=\"5\"> 和手動刷新的煩惱"
   },
   "short_name": {
     "description": "昵称",
-    "message": "重置"
+    "message": "易繪"
   },
   "monday": {
     "description": "周一",
-    "message": "周一"
+    "message": "週一"
   },
   "tuesday": {
     "description": "周二",
-    "message": "周二"
+    "message": "週二"
   },
   "wednesday": {
     "description": "周三",
-    "message": "周三"
+    "message": "週三"
   },
   "thursday": {
     "description": "周四",
-    "message": "周四"
+    "message": "週四"
   },
   "friday": {
     "description": "周五",
-    "message": "周五"
+    "message": "週五"
   },
   "saturday": {
     "description": "周六",
-    "message": "周六"
+    "message": "週六"
   },
   "sunday": {
     "description": "周日",
-    "message": "周日"
+    "message": "週日"
   },
   "popup_h1": {
     "description": "弹窗标题",
-    "message": "定时刷新"
+    "message": "定時重繪"
   },
   "email_feedback": {
-    "description": "邮件反馈",
-    "message": "邮件反馈"
+    "description": "邮件反馈，用于 popup 底部 ico 第二个图标的 title",
+    "message": "郵件迴響"
   },
   "bug_feedback": {
-    "description": "反馈建议",
-    "message": "bug 反馈"
+    "description": "反馈建议，用于 popup 底部 ico 第四个图标的 title",
+    "message": "bug 迴響"
   },
   "state": {
     "description": "状态",
-    "message": "状态"
+    "message": "狀態"
   },
   "open": {
     "description": "当前状态为开启",
-    "message": "开启"
+    "message": "開啟"
   },
   "close": {
     "description": "当前状态为关闭",
-    "message": "关闭"
+    "message": "關閉"
   },
   "float_left": {
     "description": "当前状态为关闭",
-    "message": "关闭"
+    "message": "關閉"
   },
   "right_suspend": {
     "description": "当前状态为关闭",
-    "message": "暂停"
+    "message": "暫停"
   },
   "right_restore": {
     "description": "当前状态为关闭",
-    "message": "恢复"
+    "message": "恢復"
   },
   "no_refresh_node": {
     "description": "未展示定时模块时的注解",
-    "message": "注：当前页面不提供刷新"
+    "message": "注：當前頁面不提供重繪"
   }
 }

@@ -62,9 +62,7 @@ export function App() {
         to: 'contentJS' | '';
       };
       switch (request.type) {
-        /// 收到刷新页面相关的消息
-        case 'refresh': {
-          /** 来自于弹窗的消息，通知后台刷新状态 */
+        case 'areYouThere': {
           if (request.from == 'popup') {
             if (typeof sendResponse === 'function') {
               sendResponse({
@@ -72,11 +70,21 @@ export function App() {
                 id: sender.id,
               });
             }
-            message.refreshState();
           }
-          setDelay(request.delay);
-          if ((data.delay = request.delay) === 0) setState(-1);
-          else if (request.state === 'suspend') {
+          break;
+        }
+        /// 收到刷新页面相关的消息
+        case 'refresh': {
+          /** 来自于弹窗的消息
+           *
+           * 通知后台刷新状态
+           *
+           * 此时 popup 已更改储存的数据 */
+          if (request.from == 'popup') message.refreshState();
+          setDelay(request.delay); /// 设置
+          if ((data.delay = request.delay) === 0) {
+            setState(-1);
+          } else if (request.state === 'suspend') {
             setState(0);
             if (document.visibilityState == 'visible') data.positiveStop = true;
           } else {
@@ -85,11 +93,6 @@ export function App() {
           }
           break;
         }
-
-        // case 'reloadPage': {
-        //   window.location.reload();
-        //   break;
-        // }
       }
     });
 

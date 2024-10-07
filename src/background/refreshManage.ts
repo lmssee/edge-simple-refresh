@@ -20,7 +20,7 @@ export function managementRefresh(type: string, tab: CmTabsTab) {
     // 收到页面的问询消息后从本地获取数据
     if (result.refreshPageList && result.refreshPageList[id]) {
       /** 本地储存的数据 */
-      const localValue = result.refreshPageList[id];
+      const localValue = result.refreshPageList[id]!;
       switch (type) {
         /// 页面初始化后查询刷新状态
         case 'askRefresh': {
@@ -43,6 +43,10 @@ export function managementRefresh(type: string, tab: CmTabsTab) {
           break;
         }
       }
+    } else if (refreshList[id]) {
+      /// 在 popup 点击关闭状态后将触发该状态（此时在本地储存的数据已经清理）这时候清理内存中的数据
+      clearTimeout(refreshList[id].timeId); /// 清理完成的定时器
+      delete refreshList[id]; /// 移除内存中储存的数据
     }
     return;
   });
@@ -82,10 +86,11 @@ function cancelRefresh(id: number, result: CmStorageLocalValueT) {
 }
 /** 页面请求刷新状态，多由于在 popup 页面更改了当前的状态 */
 function refreshState(id: number, localValue: refreshItemT) {
-  if (!localValue) {
+  if (localValue.delay === 0) {
     clearTimeout(refreshList[id].timeId); /// 清理完成的定时器
     /// 状态被清理
     delete refreshList[id]; /// 移除内存中储存的数据
+    return;
   }
   /// 尚没有值，即开始阶段
   else if (!refreshList[id]) {
