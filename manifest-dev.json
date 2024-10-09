@@ -33,6 +33,7 @@
       ],
       "js": [
         "./content/index.js",
+        "./commons.js",
         "./content/development.js"
       ]
     }

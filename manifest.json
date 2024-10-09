@@ -32,6 +32,7 @@
         "https://*/*"
       ],
       "js": [
+        "./commons.js",
         "./content/index.js"
       ]
     }

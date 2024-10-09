@@ -19,7 +19,7 @@
     -1px -1px 8px #fff6;
   transition: box-shadow 0.8s;
   border-radius: 30px;
-  animation: var(--refresh-animation-delay) linear 0s infinite backwards refreshFloatButton;
+  animation: var(--refresh-animation-delay) linear 0s 1 forwards refreshFloatButton;
 
   &:hover {
     transition: box-shadow 0.4s;

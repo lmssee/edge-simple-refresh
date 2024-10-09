@@ -50,7 +50,14 @@ createRoot(rootElement).render(
   </StrictMode>,
 );
 
-/** 切换底部移动背景的动画状态
+/**
+ * *一个简单的修改 head 总 style 规则的方法*
+ *
+ *
+ *
+ * 切换底部移动背景的动画状态
+ *
+ *
  * @param {boolean} [pause=true]  默认为让动画停止（true）
  */
 

@@ -18,6 +18,10 @@ export default function ({ dev }) {
       import: './src/content/root.tsx',
       filename: 'content/index.js',
     },
+    debuggingPage: {
+      import: './src/dev/root.tsx',
+      filename: 'dev/[id].[contenthash].js',
+    },
     reload: {
       import: './src/content/development.ts',
       filename: 'content/development.js',
@@ -99,6 +103,17 @@ export default function ({ dev }) {
   };
   /** 插件 */
   const plugins = [
+    /** 调试页面 */
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'dev/index.html',
+      chunks: ['debuggingPage'],
+      inject: 'body',
+      templateParameters: {
+        title: '定时刷新-开发块',
+      },
+    }),
+    /// 弹窗
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'popup/index.html',
@@ -106,15 +121,6 @@ export default function ({ dev }) {
       inject: 'body',
       templateParameters: {
         title: '定时刷新',
-      },
-    }),
-    new HtmlWebpackPlugin({
-      template: './index.html',
-      filename: 'dev/index.html',
-      chunks: [],
-      inject: 'body',
-      templateParameters: {
-        title: '定时刷新-开发块',
       },
     }),
     /// 文件复制
@@ -132,6 +138,25 @@ export default function ({ dev }) {
     mangleExports: 'size',
     mangleWasmImports: false,
     // runtimeChunk: 'single',
+    splitChunks: {
+      // chunks: 'all',
+      cacheGroups: {
+        /// react 相关
+        reactCommons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'commons',
+          chunks: 'all',
+          enforce: true,
+        },
+        mainGroup: {
+          test: /[\\/]src[\\/]popup[\\/]/,
+          // name: 'main-common',
+          chunks: 'all',
+          minSize: 0,
+          priority: 10,
+        },
+      },
+    },
   };
 
   /** 开发服务
@@ -156,11 +181,16 @@ export default function ({ dev }) {
     devtool: 'source-map',
     devServer,
   };
+
   /// 生产环境
   if (!dev) {
-    delete entry.reload;
-    delete config.devtool;
-    delete config.devServer;
+    plugins[0] = undefined;
+    // plugins.shift(); // 删除调试页面创建
+    // plugins.splice(0, 1); // 删除调试页面创建
+    delete entry.reload; /// 清理测试使用的扩展重加载
+    delete entry.debuggingPage; // 清除调试 js 创建
+    delete config.devtool; /// 清理测试
+    delete config.devServer; /// 清理测试的服务
   }
 
   return config;
