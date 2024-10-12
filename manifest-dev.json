@@ -47,7 +47,6 @@
     "scripting",
     "activeTab",
     "storage",
-    "tabs",
-    "contextMenus"
+    "tabs"
   ]
 }

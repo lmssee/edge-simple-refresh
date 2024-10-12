@@ -25,7 +25,7 @@ import refreshReducer from './refreshSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['tab', 'refresh'],
+  whitelist: ['refresh'],
 };
 
 /** 创建需要储存到本地的数据 */

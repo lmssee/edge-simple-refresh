@@ -59,10 +59,6 @@ export const message = {
       type: 'restoreRefresh',
       to: 'backgroundJS',
     });
-    this.send({
-      type: 'restoreRefresh',
-      to: 'backgroundJS',
-    });
   },
   /** 刷新状态 */
   refreshState() {
@@ -71,7 +67,10 @@ export const message = {
       to: 'backgroundJS',
     });
   },
-  /** 重新加载扩展 */
+  /** 重新加载扩展
+   *
+   * 用在 `development.ts` 开发环境
+   */
   reloadExtend() {
     this.send({
       type: 'reloadExtend',

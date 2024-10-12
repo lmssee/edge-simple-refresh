@@ -29,12 +29,16 @@ setStyle(root, {
 setStyle(root, {
   '--my-color': '#f0f',
 });
-
+/*** 页面 html */
 const html = document.querySelector('html');
-html!.lang = chrome.i18n.getUILanguage().toLocaleLowerCase().startsWith('zh')
-  ? 'zh_cn'
-  : 'en';
-html!.dir = chrome.i18n.getMessage('@@bidi_dir');
+if (html) {
+  /// 设定页面语言
+  html.lang = chrome.i18n.getUILanguage().toLocaleLowerCase().startsWith('zh')
+    ? 'zh_cn'
+    : 'en';
+  /// 设定文本方向
+  html.dir = chrome.i18n.getMessage('@@bidi_dir');
+}
 
 createRoot(root).render(
   <StrictMode>

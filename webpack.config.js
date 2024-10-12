@@ -20,6 +20,10 @@ export default function ({ dev }) {
     },
     debuggingPage: {
       import: './src/dev/root.tsx',
+      filename: 'dev_panel/[id].[contenthash].js',
+    },
+    devtoolsJs: {
+      import: './src/dev/devtools.ts',
       filename: 'dev/[id].[contenthash].js',
     },
     reload: {
@@ -103,14 +107,24 @@ export default function ({ dev }) {
   };
   /** 插件 */
   const plugins = [
-    /** 调试页面 */
+    /** 调试面板页面 */
     new HtmlWebpackPlugin({
       template: './index.html',
-      filename: 'dev/index.html',
+      filename: 'dev_panel/index.html',
       chunks: ['debuggingPage'],
       inject: 'body',
       templateParameters: {
-        title: '定时刷新-开发块',
+        title: '定时刷新-开发面板页面',
+      },
+    }),
+    /** 调试主页面 */
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'dev/index.html',
+      chunks: ['devtoolsJs'],
+      inject: 'body',
+      templateParameters: {
+        title: '控制台总页面',
       },
     }),
     /// 弹窗
@@ -128,6 +142,8 @@ export default function ({ dev }) {
       patterns: [
         { from: `manifest${(dev && '-dev') || ''}.json`, to: 'manifest.json' },
         { from: 'src/icons', to: 'icons' },
+        // { from: './devtools.html', to: 'devtools.html' },
+        // { from: './devtools.js', to: 'devtools.js' },
         { from: 'src/_locales', to: '_locales' },
       ],
     }),
@@ -184,11 +200,11 @@ export default function ({ dev }) {
 
   /// 生产环境
   if (!dev) {
-    plugins[0] = undefined;
+    // plugins[0] = undefined;
     // plugins.shift(); // 删除调试页面创建
     // plugins.splice(0, 1); // 删除调试页面创建
     delete entry.reload; /// 清理测试使用的扩展重加载
-    delete entry.debuggingPage; // 清除调试 js 创建
+    // delete entry.debuggingPage; // 清除调试 js 创建
     delete config.devtool; /// 清理测试
     delete config.devServer; /// 清理测试的服务
   }

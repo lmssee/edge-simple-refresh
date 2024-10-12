@@ -8,6 +8,8 @@ declare module '*.module.scss' {
     timeShow: string;
     /** 悬浮按钮 */
     floatButton: string;
+    /** 测试页面 */
+    dev: string;
   };
   export default classes;
 }

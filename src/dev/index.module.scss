@@ -1,0 +1,58 @@
+.dev {
+  div:first-child {
+    text-align: center;
+    padding: 20px;
+  }
+
+  input {
+    border: none;
+    box-shadow: 1px 1px 3px #666;
+    border-radius: 8px;
+    display: inline-block;
+    background-color: #000;
+    color: #0f9;
+    margin: 0px 15px;
+    padding: 3px 16px;
+    &:hover {
+      background-color: #0000;
+      color: #000;
+    }
+  }
+
+  table {
+    margin: 2rem auto;
+    // border: 2px bisque solid;
+    box-shadow: 1px 1px 16px #fa9;
+    border-radius: 13px;
+
+    tr {
+      border-radius: 13px;
+      &:nth-child(2n):hover {
+        background-color: #6666;
+      }
+      &:nth-child(2n + 1):hover {
+        background-color: #6336;
+      }
+      th {
+        min-width: 3rem;
+        border-radius: 13px;
+      }
+
+      td {
+        padding: 10px;
+        text-align: center;
+        border-radius: 13px;
+
+        &:nth-child(2) {
+          width: 10rem;
+          overflow: hidden;
+        }
+
+        img {
+          width: 36px;
+          height: 36px;
+        }
+      }
+    }
+  }
+}

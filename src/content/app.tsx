@@ -20,7 +20,7 @@ export function App() {
   const [delay, setDelay] = useState(0);
   const div = useRef(null);
 
-  /** 页面效果 */
+  /** 页面当前是否隐藏 */
   const visibilitychange = () => {
     const visibility = document.visibilityState;
     if (visibility === 'visible' && data.state === 0 && !data.positiveStop) {
@@ -62,6 +62,7 @@ export function App() {
         to: 'contentJS' | '';
       };
       switch (request.type) {
+        /** 当 popup 发送该消息 */
         case 'areYouThere': {
           if (request.from == 'popup') {
             if (typeof sendResponse === 'function') {
@@ -80,14 +81,19 @@ export function App() {
            * 通知后台刷新状态
            *
            * 此时 popup 已更改储存的数据 */
-          if (request.from == 'popup') message.refreshState();
-          setDelay(request.delay); /// 设置
+          if (request.from == 'popup') {
+            message.refreshState();
+          }
+          setDelay(request.delay); /// 设置延迟时间
           if ((data.delay = request.delay) === 0) {
+            /// 设定为取消
             setState(-1);
           } else if (request.state === 'suspend') {
+            /// 设定为暂停
             setState(0);
             if (document.visibilityState == 'visible') data.positiveStop = true;
-          } else {
+          } else if (request.state == 'refresh') {
+            /// 设定为启动
             setState(1);
             data.positiveStop = false;
           }

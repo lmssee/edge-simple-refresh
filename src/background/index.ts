@@ -9,7 +9,6 @@
 
 /** 将右键的执行代码放进来 */
 import { CRuntime } from 'src/common/chromeRuntime';
-import './getState';
 import { managementRefresh } from './refreshManage';
 import { CTabs } from 'src/common';
 

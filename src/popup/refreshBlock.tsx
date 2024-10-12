@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { RadioBlock } from './refreshRadio';
 import { refreshPageListT } from 'src/common/chromeLStorage';
 import { StoreState } from './store/storeData';
+import { message } from './message';
 
 /** 导出主模块  */
 export function Refresh(): React.JSX.Element {
@@ -29,7 +30,13 @@ export function Refresh(): React.JSX.Element {
   /** 当前状态 */
   const [StateNow, setStateNow] = useState(false);
 
-  /** 改变当前状态 */
+  /** 改变当前状态
+   *
+   *
+   * 触发器：
+   *
+   * - 由页面按钮点击事件触发
+   */
   function changeState() {
     const newStateNow = !StateNow;
     setStateNow(newStateNow); /// 更改页面的状态
@@ -39,6 +46,12 @@ export function Refresh(): React.JSX.Element {
   /** 管理数据
    *
    * 根据动作管理该页面的数据
+   *
+   * 触发器：
+   *
+   * - 页面点击事件触发
+   * - refreshInfo 数据变化
+   *
    */
   function manageData(en: boolean) {
     CLStorage.get(['refreshPageList'], result => {
@@ -73,26 +86,22 @@ export function Refresh(): React.JSX.Element {
             delete refreshPageList[element.id];
         }
       }
+      /// 值储存到本地后再进行更改
       CLStorage.set({ refreshPageList }, () => {
-        /** 值储存到本地后再进行更改 */
-        sendMessage(en);
+        /** 发送消息
+         *
+         * 向页面发送当前动作
+         *
+         * 根据动作且人发送的延迟时间
+         */
+        message.changeState(
+          refreshPageList[id].state,
+          en ? refreshInfo[id] || 1.2 : 0,
+        );
       });
     });
   }
-  /** 发送消息
-   *
-   * 向页面发送当前动作
-   */
-  function sendMessage(en: boolean) {
-    CTabs.sendMessage(id, {
-      type: 'refresh',
-      state: 'refresh',
-      from: 'popup',
-      to: 'contentJS',
-      delay: en ? refreshInfo[id] || 1.2 : 0,
-      visibilityState: true,
-    });
-  }
+
   /** 仅初始化时需要设定 */
   useEffect(() => {
     setStateText(getLocaleText('state')); /// 设置状态文本

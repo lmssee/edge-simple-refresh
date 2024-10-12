@@ -86,6 +86,7 @@ function cancelRefresh(id: number, result: CmStorageLocalValueT) {
 }
 /** 页面请求刷新状态，多由于在 popup 页面更改了当前的状态 */
 function refreshState(id: number, localValue: refreshItemT) {
+  /// 倘若当前给出的时间为 0
   if (localValue.delay === 0) {
     clearTimeout(refreshList[id].timeId); /// 清理完成的定时器
     /// 状态被清理

@@ -5,7 +5,7 @@
   },
   "description": {
     "description": "版本的描述",
-    "message": "簡單的頁面刷新工具。在需要的時候定時刷新你的頁面，讓簡單的頁面調試擺脫 <meta HTTP-equiv=\"refresh\" content=\"5\"> 和手動刷新的煩惱"
+    "message": "簡單的頁面刷新工具，在需要的時候定時刷新你的頁面。"
   },
   "short_name": {
     "description": "昵称",
